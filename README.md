@@ -1,4 +1,4 @@
-# concurrent map [![Build Status](https://travis-ci.com/smallnest/concurrent-map.svg?branch=master)](https://travis-ci.com/smallnest/concurrent-map)
+# safemap [![Build Status](https://travis-ci.com/smallnest/safemap.svg?branch=master)](https://travis-ci.com/smallnest/safemap)
 
 > 一个线程安全的，支持泛型的，高性能的map库。基于`orcaman/concurrent-map`的实现和`alphadose/haxmap`的hash算法。
 
