@@ -1,4 +1,10 @@
-# concurrent map [![Build Status](https://travis-ci.com/orcaman/concurrent-map.svg?branch=master)](https://travis-ci.com/orcaman/concurrent-map)
+# concurrent map [![Build Status](https://travis-ci.com/smallnest/concurrent-map.svg?branch=master)](https://travis-ci.com/smallnest/concurrent-map)
+
+> 一个线程安全的，支持泛型的，高性能的map库。基于`orcaman/concurrent-map`的实现和`alphadose/haxmap`的hash算法。
+
+- Forked from [orcaman/concurrent-map](https://github.com/orcaman/concurrent-map) and supports any type of the key.
+- The hash algorithm for key is copied from [alphadose/haxmap](https://github.com/alphadose/haxmap) and fixed for some types.
+
 
 As explained [here](http://golang.org/doc/faq#atomic_maps) and [here](http://blog.golang.org/go-maps-in-action), the `map` type in Go doesn't support concurrent reads and writes. `concurrent-map` provides a high-performance solution to this by sharding the map with minimal time spent waiting for locks.
 
@@ -10,23 +16,23 @@ Import the package:
 
 ```go
 import (
-	"github.com/orcaman/concurrent-map/v2"
+	"github.com/smallnest/safemap"
 )
 
 ```
 
 ```bash
-go get "github.com/orcaman/concurrent-map/v2"
+go get "github.com/smallnest/safemap"
 ```
 
-The package is now imported under the "cmap" namespace.
+The package is now imported under the "safemap" namespace.
 
 ## example
 
 ```go
 
-	// Create a new map.
-	m := cmap.New[string]()
+	// Create a new map (K type is string, and V type is string too).
+	m := safemap.New[string,string]()
 
 	// Sets item within map, sets "bar" under key "foo"
 	m.Set("foo", "bar")
@@ -37,27 +43,32 @@ The package is now imported under the "cmap" namespace.
 	// Removes item under key "foo"
 	m.Remove("foo")
 
+	//  Create a new map (K type is int, and V type is string too).
+	m2 := safemap.New[int,string]()
+
+	// Sets item within map, sets "bar" under key 1
+	m2.Set(1, "bar")
+
+	// Retrieve item from map.
+	bar, ok = m2.Get(1)
+
+	// Removes item under key 1
+	m2.Remove("foo")
+
 ```
 
-For more examples have a look at concurrent_map_test.go.
+For more examples have a look at safemap_test.go.
 
 Running tests:
 
 ```bash
-go test "github.com/orcaman/concurrent-map/v2"
+go test "github.com/smallnest/safemap"
 ```
 
-## guidelines for contributing
-
-Contributions are highly welcome. In order for a contribution to be merged, please follow these guidelines:
-- Open an issue and describe what you are after (fixing a bug, adding an enhancement, etc.).
-- According to the core team's feedback on the above mentioned issue, submit a pull request, describing the changes and linking to the issue.
-- New code must have test coverage.
-- If the code is about performance issues, you must include benchmarks in the process (either in the issue or in the PR).
-- In general, we would like to keep `concurrent-map` as simple as possible and as similar to the native `map`. Please keep this in mind when opening issues.
-
-## language
-- [中文说明](./README-zh.md)
+Running Benchmark:
+```bash
+go test -benchmem -bench "github.com/smallnest/safemap"
+```
 
 ## license
 MIT (see [LICENSE](https://github.com/orcaman/concurrent-map/blob/master/LICENSE) file)
