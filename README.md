@@ -6,7 +6,7 @@
 - The hash algorithm for key is copied from [alphadose/haxmap](https://github.com/alphadose/haxmap) and fixed for some types.
 
 
-As explained [here](http://golang.org/doc/faq#atomic_maps) and [here](http://blog.golang.org/go-maps-in-action), the `map` type in Go doesn't support concurrent reads and writes. `concurrent-map` provides a high-performance solution to this by sharding the map with minimal time spent waiting for locks.
+As explained [here](http://golang.org/doc/faq#atomic_maps) and [here](http://blog.golang.org/go-maps-in-action), the `map` type in Go doesn't support concurrent reads and writes. `safemap` provides a high-performance solution to this by sharding the map with minimal time spent waiting for locks, with full generic support.
 
 Prior to Go 1.9, there was no concurrent map implementation in the stdlib. In Go 1.9, `sync.Map` was introduced. The new `sync.Map` has a few key differences from this map. The stdlib `sync.Map` is designed for append-only scenarios. So if you want to use the map for something more like in-memory db, you might benefit from using our version. You can read more about it in the golang repo, for example [here](https://github.com/golang/go/issues/21035) and [here](https://stackoverflow.com/questions/11063473/map-with-concurrent-access)
 
@@ -22,7 +22,7 @@ import (
 ```
 
 ```bash
-go get "github.com/smallnest/safemap"
+go get github.com/smallnest/safemap@latest
 ```
 
 The package is now imported under the "safemap" namespace.
@@ -53,7 +53,7 @@ The package is now imported under the "safemap" namespace.
 	bar, ok = m2.Get(1)
 
 	// Removes item under key 1
-	m2.Remove("foo")
+	m2.Remove(1)
 
 ```
 
@@ -62,12 +62,12 @@ For more examples have a look at safemap_test.go.
 Running tests:
 
 ```bash
-go test "github.com/smallnest/safemap"
+go test github.com/smallnest/safemap
 ```
 
 Running Benchmark:
 ```bash
-go test -benchmem -bench "github.com/smallnest/safemap"
+go test -benchmem -bench github.com/smallnest/safemap
 ```
 
 ## license
