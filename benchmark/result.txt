@@ -1,0 +1,12 @@
+BenchmarkHaxMapReadsOnly-8             	  113995	     10511 ns/op	       0 B/op	       0 allocs/op
+BenchmarkHaxMapReadsWithWrites-8       	   65848	     17755 ns/op	    6575 B/op	     821 allocs/op
+BenchmarkGoSyncMapReadsOnly-8          	   33531	     32585 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGoSyncMapReadsWithWrites-8    	   22123	     52612 ns/op	   28623 B/op	    2654 allocs/op
+BenchmarkCornelkMapReadsOnly-8         	  105493	     10128 ns/op	       0 B/op	       0 allocs/op
+BenchmarkCornelkMapReadsWithWrites-8   	   62604	     19077 ns/op	    7393 B/op	     924 allocs/op
+BenchmarkXsyncMapReadsOnly-8           	  231136	      4831 ns/op	       0 B/op	       0 allocs/op
+BenchmarkXsyncMapReadsWithWrites-8     	  160939	      7321 ns/op	    2837 B/op	     177 allocs/op
+BenchmarkSafeMapReadsOnly-8            	    5928	    197784 ns/op	       0 B/op	       0 allocs/op
+BenchmarkSafeMapReadsWithWrites-8      	    6751	    183343 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMutexMapReadsOnly-8           	    3021	    389591 ns/op	       0 B/op	       0 allocs/op
+BenchmarkMutexMapReadsWithWrites-8     	    1742	    807355 ns/op	       3 B/op	       0 allocs/op

@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"runtime"
 	"sync"
+
+	"github.com/dolthub/maphash"
 )
 
 var ShardCount = runtime.GOMAXPROCS(-1)
@@ -12,7 +14,7 @@ var ShardCount = runtime.GOMAXPROCS(-1)
 // To avoid lock bottlenecks this map is dived to several (ShardCount) map shards.
 type SafeMap[K comparable, V any] struct {
 	shared []*SafeMapShared[K, V]
-	hasher func(K) uintptr
+	hasher *maphash.Hasher[K]
 }
 
 // A "thread" safe string to anything map.
@@ -28,15 +30,16 @@ func New[K comparable, V any]() *SafeMap[K, V] {
 		shared[i] = &SafeMapShared[K, V]{items: make(map[K]V)}
 	}
 
+	hasher := maphash.NewHasher[K]()
 	return &SafeMap[K, V]{
 		shared: shared,
-		hasher: genHasher[K](),
+		hasher: &hasher,
 	}
 }
 
 // GetShard returns shard under given key
 func (m *SafeMap[K, V]) GetShard(key K) *SafeMapShared[K, V] {
-	k := uint(m.hasher(key))
+	k := uint(m.hasher.Hash(key))
 	return m.shared[uint(k)%uint(ShardCount)]
 }
 
